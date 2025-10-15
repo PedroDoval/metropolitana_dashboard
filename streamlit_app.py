@@ -222,7 +222,7 @@ base_df = load_base_dataframe(year)
 # ------------------------
 #  Persistence helpers
 # ------------------------
-CHAT_FILE = Path("data/chat/chat_messages.json")
+CHAT_FILE = Path("./data/chat/chat_messages.json")
 
 
 def load_messages():
