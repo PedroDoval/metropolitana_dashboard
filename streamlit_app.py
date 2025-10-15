@@ -129,7 +129,7 @@ def plot_campos_all_leagues(df):
         "LaLiga",
         "Premier",
         "Superliga",
-    ]  # your desired order
+    ]
 
     list_dfs = [g for _, g in df.groupby("liga")]
     list_campos_leagues = [list(df["campo_clean"]) for df in list_dfs]
@@ -143,7 +143,7 @@ def plot_campos_all_leagues(df):
 
     # Count the number of occurrences of each "CAMPO" in each "DIVISION"
     campo_counts = df.groupby(["CAMPO", "DIVISION"]).size().unstack(fill_value=0)
-    campo_counts = campo_counts[order]
+    campo_counts = campo_counts[[c for c in order if c in campo_counts.columns]]
 
     fig, ax = plt.subplots(figsize=(8, 6))
     # Plot the data as a grouped bar chart
@@ -167,7 +167,7 @@ def plot_hours_all_leagues(df):
         "LaLiga",
         "Premier",
         "Superliga",
-    ]  # your desired order
+    ]
     df["liga"] = pd.Categorical(df["liga"], categories=order, ordered=True)
 
     list_dfs = [g for _, g in df.groupby("liga")]
@@ -182,7 +182,7 @@ def plot_hours_all_leagues(df):
 
     # Count the number of occurrences of each "CAMPO" in each "DIVISION"
     hora_counts = df.groupby(["HORA", "DIVISION"]).size().unstack(fill_value=0)
-    hora_counts = hora_counts[order]
+    hora_counts = hora_counts[[c for c in order if c in hora_counts.columns]]
     fig, ax = plt.subplots(figsize=(8, 6))
 
     ax.legend(title="DIVISION", labels=[c for c in order if c in hora_counts.columns])
@@ -207,17 +207,8 @@ def load_base_dataframe(year: int):
     df = pd.concat(dfs, ignore_index=True)
     return df
 
-
-st.title("Liga metropolitana ⚽")
-
-# year selector
-year = st.selectbox("Selecciona el año:", ["2025/26", "2024/25"], index=0)
-if year == "2025/26":
-    year = 2025
-if year == "2024/25":
-    year = 2024
-
-base_df = load_base_dataframe(year)
+st.set_page_config(page_title="Liga Dashboard", page_icon="💬")
+st.title("⚽ Liga Dashboard ⚽")
 
 # ------------------------
 #  Persistence helpers
@@ -304,14 +295,26 @@ with st.sidebar.form("chat_form", clear_on_submit=True):
 
 
 st.markdown(
+    "<p style = 'font-size: 16px; color: black;' >"
+    "Portal de transparencia de la asignación de campos y horas en la Liga Metropolitana"
+    "</p>"
     "<p style = 'font-size: 13px; color: black; font-weight:bold'>"
     "Datos actualizados hasta el 14/10/2025:"
     "</p>"
-    "<p style='font-size: 13px; color: gray;'>"
-    "Selecciona un equipo o compara las ligas disponibles:"
+    "<p style='font-size: 14px; color: gray;'>"
+    "Selecciona temporada, y escoge un equipo o compara entre diferentes ligas:"
     "</p>",
     unsafe_allow_html=True,
 )
+
+# year selector
+year = st.selectbox("Selecciona temporada:", ["2025/26", "2024/25"], index=0)
+if year == "2025/26":
+    year = 2025
+if year == "2024/25":
+    year = 2024
+
+base_df = load_base_dataframe(year)
 
 teams = get_all_teams(base_df)
 selected_team = st.selectbox("Escoge tu equipo:", teams)
