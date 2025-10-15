@@ -233,6 +233,7 @@ def load_messages():
 
 
 def save_messages(messages):
+    print("Saving messages:\n", messages)
     with open(CHAT_FILE, "w", encoding="utf-8") as f:
         json.dump(messages, f, ensure_ascii=False, indent=2)
 
