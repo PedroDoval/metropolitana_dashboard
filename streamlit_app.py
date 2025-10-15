@@ -340,3 +340,16 @@ elif show_team_btn and selected_team:
     st.pyplot(fig)
     fig2 = plot_hours_one_league(base_df, selected_team)
     st.pyplot(fig2)
+
+
+st.markdown("""
+    <script>
+    // Force sidebar to be open on page load
+    window.addEventListener('load', function() {
+        const sidebarButton = window.parent.document.querySelector('[data-testid="collapsedControl"]');
+        if (sidebarButton && sidebarButton.getAttribute('aria-expanded') === 'false') {
+            sidebarButton.click();
+        }
+    });
+    </script>
+""", unsafe_allow_html=True)
