@@ -99,11 +99,12 @@ def plot_campos_one_team(df, team=None):
     ax.set_title(titulo, fontsize=16)
     ax.set_xlabel("CAMPO", fontsize=12)
     ax.set_ylabel("Frecuencia", fontsize=12)
+    ax.yaxis.get_major_locator().set_params(integer=True)
     plt.tight_layout()
     return fig
 
 
-def plot_hours_one_league(df, team: str):
+def plot_hours_one_team(df, team: str):
     df = df.loc[(df["LOCAL"] == team) | (df["VISITANTE"] == team)]
     df["HORA"] = pd.to_datetime(df["HORA"], format="%H:%M").dt.strftime("%H:%M")
     campo_counts = df["HORA"].value_counts().sort_index()
@@ -117,6 +118,7 @@ def plot_hours_one_league(df, team: str):
     ax.set_title(titulo, fontsize=16)
     ax.set_xlabel("Hora (redondeando a en punto, y media)", fontsize=9)
     ax.set_ylabel("Frecuencia", fontsize=12)
+    ax.yaxis.get_major_locator().set_params(integer=True)
     plt.tight_layout()
     return fig
 
@@ -338,7 +340,7 @@ if show_league_compare_btn:
 elif show_team_btn and selected_team:
     fig = plot_campos_one_team(base_df, selected_team)
     st.pyplot(fig)
-    fig2 = plot_hours_one_league(base_df, selected_team)
+    fig2 = plot_hours_one_team(base_df, selected_team)
     st.pyplot(fig2)
 
 
