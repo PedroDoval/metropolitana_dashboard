@@ -301,7 +301,7 @@ st.markdown(
     "Portal de transparencia de la asignación de campos y horas en la Liga Metropolitana"
     "</p>"
     "<p style = 'font-size: 13px; color: black; font-weight:bold'>"
-    "Datos actualizados hasta el 14/10/2025:"
+    "Datos actualizados hasta el 02/12/2025:"
     "</p>"
     "<p style='font-size: 14px; color: gray;'>"
     "Selecciona temporada, y escoge un equipo o compara entre diferentes ligas:"
